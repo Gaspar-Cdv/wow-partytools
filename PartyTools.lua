@@ -53,7 +53,7 @@ end
 --- World markers bar
 ------------------------
 
-local worldFrame = CreateMovableFrame("PartyToolsWorldMarkersFrame", getContainerSize(9), 36, "TOPLEFT", UIParent, "TOPLEFT", 10, -10)
+local worldFrame = CreateMovableFrame("PartyToolsWorldMarkersFrame", getContainerSize(9), 36, "TOPLEFT", UIParent, "TOPLEFT", 0, 0)
 
 local worldMarkers = {
 	{ marker = 1, tex = {0.25, 0.5, 0.25, 0.5} }, -- Square
@@ -99,7 +99,7 @@ clearWorldMarkers:SetAttribute("action1", "clear")
 --- Tools bar
 ------------------------
 
-local toolsFrame = CreateMovableFrame("PartyToolsRaidToolsFrame", getContainerSize(4), 36, "TOPLEFT", worldFrame, "TOPRIGHT", 10, 0)
+local toolsFrame = CreateMovableFrame("PartyToolsRaidToolsFrame", getContainerSize(4), 36, "TOPLEFT", worldFrame, "TOPRIGHT", 2, 0)
 
 -- Ready Check
 local readyCheckBtn = CreateButton(toolsFrame, "Interface\\RaidFrame\\ReadyCheck-Waiting", FRAME_PADDING)
@@ -197,6 +197,9 @@ end)
 -- Hide the default raid frame manager
 hooksecurefunc("CompactRaidFrameManager_UpdateShown", function()
     if CompactRaidFrameManager then
+        local isProtected = CompactRaidFrameManager:IsProtected()
+        if not isProtected then
         CompactRaidFrameManager:Hide()
+        end
     end
 end)
