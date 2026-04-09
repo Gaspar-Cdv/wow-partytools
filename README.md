@@ -1,7 +1,7 @@
 # PartyTools
 
 PartyTools is a minimal World of Warcraft addon for fast access to group utilities and world markers.
-It is inspired by the addon [wMarker](https://www.curseforge.com/wow/addons/wmarker).
+It is largely inspired by the addon [wMarker](https://www.curseforge.com/wow/addons/wmarker).
 
 ## Features
 
