@@ -3,5 +3,6 @@
 ## Title: PartyTools
 ## Notes: Raid world markers, countdown, ready check and more
 ## Author: Gaspito
+## IconTexture: Interface\AddOns\PartyTools\img\icon_timer.tga
 
 PartyTools.lua
