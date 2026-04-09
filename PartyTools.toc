@@ -1,0 +1,7 @@
+## Interface: 120001
+## Version: 1.0.0
+## Title: PartyTools
+## Notes: Raid world markers, countdown, ready check and more
+## Author: Gaspito
+
+PartyTools.lua
