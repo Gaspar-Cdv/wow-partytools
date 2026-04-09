@@ -1,4 +1,6 @@
--- Utils
+------------------------
+--- Utils functions
+------------------------
 
 local BUTTON_SIZE = 20
 local BUTTON_SPACING = 6
@@ -47,7 +49,9 @@ local function getContainerSize(numberOfItems)
     return (numberOfItems * BUTTON_SIZE) + (numberOfItems * BUTTON_SPACING) + (2 * FRAME_PADDING)
 end
 
--- World markers
+------------------------
+--- World markers bar
+------------------------
 
 local worldFrame = CreateMovableFrame("PartyToolsWorldMarkersFrame", getContainerSize(9), 36, "TOPLEFT", UIParent, "TOPLEFT", 10, -10)
 
@@ -91,7 +95,9 @@ clearWorldMarkers:SetAttribute("type1", "worldmarker")
 clearWorldMarkers:SetAttribute("marker1", "all")
 clearWorldMarkers:SetAttribute("action1", "clear")
 
--- Tools
+------------------------
+--- Tools bar
+------------------------
 
 local toolsFrame = CreateMovableFrame("PartyToolsRaidToolsFrame", getContainerSize(4), 36, "TOPLEFT", worldFrame, "TOPRIGHT", 10, 0)
 
