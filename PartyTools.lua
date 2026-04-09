@@ -137,16 +137,40 @@ local function UpdateTankMacro()
 
     local groupType = IsInRaid() and "raid" or "party"
     local numGroup = IsInRaid() and GetNumGroupMembers() or GetNumSubgroupMembers()
+    local tank1, tank2
+
+    if not IsInRaid() and GetNumGroupMembers() ~= GetNumSubgroupMembers() and UnitGroupRolesAssigned("player") == "TANK" then
+        -- it may happen that the current player is not part of the subgroup
+        tank1 = "player"
+    end
 
     for i = 1, numGroup do
         local unit = groupType .. i
-        local role = UnitGroupRolesAssigned(unit)
-        if role == "TANK" then
-            assignTankIconBtn:SetAttribute("macrotext1", "/targetmarker [@" .. unit .. "] 6") -- square
-            assignTankIconBtn:SetAttribute("macrotext2", "/targetmarker [@" .. unit .. "] 0") -- clear
-            return
+        if UnitGroupRolesAssigned(unit) == "TANK" then
+            if not tank1 then
+                tank1 = unit
+            else
+                tank2 = unit
+                break
+            end
         end
     end
+
+    local leftClickMacros = {}
+    local rightClickMacros = {}
+
+    if tank1 then
+        table.insert(leftClickMacros, "/targetmarker [@" .. tank1 .. "] 6")
+        table.insert(rightClickMacros, "/targetmarker [@" .. tank1 .. "] 0")
+    end
+
+    if tank2 then
+        table.insert(leftClickMacros, "/targetmarker [@" .. tank2 .. "] 2")
+        table.insert(rightClickMacros, "/targetmarker [@" .. tank2 .. "] 0")
+    end
+
+    assignTankIconBtn:SetAttribute("macrotext1", table.concat(leftClickMacros, "\n"))
+    assignTankIconBtn:SetAttribute("macrotext2", table.concat(rightClickMacros, "\n"))
 end
 
 -- Show/hide frames based on group status
