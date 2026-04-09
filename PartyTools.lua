@@ -125,6 +125,9 @@ countdownBtn:SetScript("OnClick", function(self, button)
        end
 end)
 
+------------------------
+--- Events
+------------------------
 
 -- Update the tank icon macro to target the first tank in the group
 local function UpdateTankMacro()
@@ -157,6 +160,7 @@ local function UpdatePartyToolsVisibility()
 	end
 end
 
+-- Register events
 local eventFrame = CreateFrame("Frame")
 eventFrame:RegisterEvent("PLAYER_LOGIN")
 eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
