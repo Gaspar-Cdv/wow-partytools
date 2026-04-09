@@ -109,6 +109,18 @@ local assignTankIconBtn = CreateButton(toolsFrame, "Interface\\AddOns\\PartyTool
 assignTankIconBtn:SetAttribute("type1", "macro")
 assignTankIconBtn:SetAttribute("type2", "macro")
 
+-- Countdown
+local countdownBtn = CreateButton(toolsFrame, "Interface\\AddOns\\PartyTools\\img\\icon_timer.tga")
+countdownBtn:SetScript("OnClick", function(self, button)
+       if button == "LeftButton" then
+	       C_PartyInfo.DoCountdown(10)
+       elseif button == "RightButton" then
+	       C_PartyInfo.DoCountdown(0)
+       end
+end)
+
+
+-- Update the tank icon macro to target the first tank in the group
 local function UpdateTankMacro()
     if not IsInGroup() then
         return
@@ -128,23 +140,27 @@ local function UpdateTankMacro()
     end
 end
 
-local assignTankEventFrame = CreateFrame("Frame")
-assignTankEventFrame:RegisterEvent("PLAYER_LOGIN")
-assignTankEventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-assignTankEventFrame:SetScript("OnEvent", UpdateTankMacro)
+-- Show/hide frames based on group status
+local function UpdatePartyToolsVisibility()
+	if IsInGroup() or IsInRaid() then
+		worldFrame:Show()
+		toolsFrame:Show()
+	else
+		worldFrame:Hide()
+		toolsFrame:Hide()
+	end
+end
 
--- Countdown
-local countdownBtn = CreateButton(toolsFrame, "Interface\\AddOns\\PartyTools\\img\\icon_timer.tga")
-countdownBtn:SetScript("OnClick", function(self, button)
-       if button == "LeftButton" then
-	       C_PartyInfo.DoCountdown(10)
-       elseif button == "RightButton" then
-	       C_PartyInfo.DoCountdown(0)
-       end
+local eventFrame = CreateFrame("Frame")
+eventFrame:RegisterEvent("PLAYER_LOGIN")
+eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+eventFrame:SetScript("OnEvent", function()
+    UpdatePartyToolsVisibility()
+    UpdateTankMacro()
 end)
 
--- Hide CompactRaidFrameManager
-
+-- Hide the default raid frame manager
 hooksecurefunc("CompactRaidFrameManager_UpdateShown", function()
     if CompactRaidFrameManager then
         CompactRaidFrameManager:Hide()
