@@ -138,10 +138,15 @@ local function UpdateTankMacro()
     local groupType = IsInRaid() and "raid" or "party"
     local numGroup = IsInRaid() and GetNumGroupMembers() or GetNumSubgroupMembers()
     local tank1, tank2
+    local healer1, healer2
 
-    if not IsInRaid() and GetNumGroupMembers() ~= GetNumSubgroupMembers() and UnitGroupRolesAssigned("player") == "TANK" then
+    if not IsInRaid() and GetNumGroupMembers() ~= GetNumSubgroupMembers() then
         -- it may happen that the current player is not part of the subgroup
+        if UnitGroupRolesAssigned("player") == "TANK" then
         tank1 = "player"
+        elseif UnitGroupRolesAssigned("player") == "HEALER" then
+            healer1 = "player"
+        end
     end
 
     for i = 1, numGroup do
@@ -154,19 +159,37 @@ local function UpdateTankMacro()
                 break
             end
         end
+        if UnitGroupRolesAssigned(unit) == "HEALER" then
+            if not healer1 then
+                healer1 = unit
+            else
+                healer2 = unit
+                break
+            end
+        end
     end
 
     local leftClickMacros = {}
     local rightClickMacros = {}
 
     if tank1 then
-        table.insert(leftClickMacros, "/targetmarker [@" .. tank1 .. "] 6")
+        table.insert(leftClickMacros, "/targetmarker [@" .. tank1 .. "] 6") -- square
         table.insert(rightClickMacros, "/targetmarker [@" .. tank1 .. "] 0")
     end
 
     if tank2 then
-        table.insert(leftClickMacros, "/targetmarker [@" .. tank2 .. "] 2")
+        table.insert(leftClickMacros, "/targetmarker [@" .. tank2 .. "] 2") -- circle
         table.insert(rightClickMacros, "/targetmarker [@" .. tank2 .. "] 0")
+    end
+
+    if healer1 then
+        table.insert(leftClickMacros, "/targetmarker [@" .. healer1 .. "] 5") -- moon
+        table.insert(rightClickMacros, "/targetmarker [@" .. healer1 .. "] 0")
+    end
+
+    if healer2 then
+        table.insert(leftClickMacros, "/targetmarker [@" .. healer2 .. "] 1") -- star
+        table.insert(rightClickMacros, "/targetmarker [@" .. healer2 .. "] 0")
     end
 
     assignTankIconBtn:SetAttribute("macrotext1", table.concat(leftClickMacros, "\n"))
