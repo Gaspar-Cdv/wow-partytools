@@ -25,3 +25,10 @@ It also hides the default compact raid frame manager.
 - Add settings to choose the markers for tanks/healers
 - Add settings to choose countdown timer duration
 - Add settings to choose to hide or not the default compact raid frame manager
+
+## Links
+
+- [CurseForge](https://www.curseforge.com/wow/addons/partytools)
+- [GitHub](https://github.com/Gaspar-Cdv/wow-partytools)
+
+For feedback or suggestions, please open an issue on the addon repository.
