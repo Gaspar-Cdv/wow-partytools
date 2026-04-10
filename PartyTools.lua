@@ -218,11 +218,9 @@ eventFrame:SetScript("OnEvent", function()
 end)
 
 -- Hide the default raid frame manager
-hooksecurefunc("CompactRaidFrameManager_UpdateShown", function()
-    if CompactRaidFrameManager then
-        local isProtected = CompactRaidFrameManager:IsProtected()
-        if not isProtected then
-        CompactRaidFrameManager:Hide()
-        end
+CompactRaidFrameManager:HookScript("OnShow", function(self)
+	if CompactRaidFrameManager and CompactRaidFrameManager.Background then
+        CompactRaidFrameManager.Background:Hide()
+        CompactRaidFrameManagerToggleButtonForward:Hide()
     end
 end)
